@@ -9,8 +9,11 @@ var api = "https://api.kraigh.net/todos";
 
 class App extends Component {
 
-  state = {
-    todos: []
+  constructor(props){
+    super(props);
+    this.state = {
+      todos: []
+    }
   }
 
   render() {
@@ -22,6 +25,7 @@ class App extends Component {
           <div className="todo" id="todo-sort-by">
             <p>Sort by:</p>
             <select id="todo-sort-by" onChange={this.handleSort.bind(this)}>
+              <option id="default">Default</option>
               <option id="created">Created</option>
               <option id="completed">Completed</option>
             </select>
@@ -50,20 +54,12 @@ class App extends Component {
       if (this.readyState === 4 && this.status === 200) {
         // Convert response to JSON
         todoList = JSON.parse(this.responseText);
-        // if (document.getElementById("todo-sort-by") === "Created") {
-        //   todoList = todoList.sort(function (a, b) {
-        //     return a.created - b.created;
-        //   });
-        // } else if (document.getElementById("todo-sort-by") === "Completed"){
-        //   todoList = todoList.sort(function (a, b) {
-        //     return a.completed - b.completed;
-        //   });
-        // }
       }
     }
     xhttp.open("GET", api, false);
     xhttp.setRequestHeader("x-api-key", apiKey);
     xhttp.send();
+    console.log(todoList);
     this.setState({ todos: todoList });
   }
 
@@ -72,6 +68,20 @@ class App extends Component {
       todos: this.state.todos.map((todo) => {
         if (todo.id === id) {
           todo.completed = !todo.completed;
+          var xhttp = new XMLHttpRequest();
+
+          var data = {
+            completed: todo.completed
+          };
+
+          // Send the request to API
+          xhttp.onreadystatechange = function () {
+            if (this.readyState === 4 && this.status === 200) {
+            }
+          }
+          xhttp.open("PUT", api + "/" + id, true);
+          xhttp.setRequestHeader("x-api-key", apiKey);
+          xhttp.send(JSON.stringify(data));
         }
         return todo;
       })
@@ -84,12 +94,15 @@ class App extends Component {
       todoList = todoList.sort(function (a, b) {
         return a.created - b.created;
       });
+      this.setState({ todos: todoList });
     } else if (e.target.value === "Completed") {
       todoList = todoList.sort(function (a, b) {
         return a.completed - b.completed;
       });
+      this.setState({ todos: todoList });
+    } else {
+      this.renderToDo();
     }
-    this.setState({ todos: todoList });
   }
 
   handleAddEvent = (e) => {
@@ -119,13 +132,49 @@ class App extends Component {
       };
 
       document.getElementById("todo-task-input").value = "";
+
+      // var created = new Date();
+      // created = (created.getTime()/1000).toFixed(0);
+      // var item = {
+      //   completed: false,
+      //   created: created,
+      //   id: "0",
+      //   text: newTodo,
+      //   updated: created,
+      //   user: "8c86ed60197c61b5ca7df09c803f1dc8852261122d7c95c1ec939232f2066244"
+      // };
+
+      // this.state.todos.push(item);
+      // this.setState({
+      //   todos: this.state.todos.map((todo) => {
+      //     return todo;
+      //   })
+      // });
+
       this.renderToDo();
     }
   }
 
   handleDelete = (id) => {
-    var api_id = id;
-    console.log(api_id);
+    // this.setState({
+    //   todos: this.state.todos.map((todo) => {
+    //     if (todo.id === id) {
+    //       var xhttp = new XMLHttpRequest();
+
+    //       // Send the request to API
+    //       xhttp.onreadystatechange = function () {
+    //         if (this.readyState === 4 && this.status === 200) {
+    //         }
+    //       }
+    //       xhttp.open("DELETE", api + "/" + id, true);
+    //       xhttp.setRequestHeader("x-api-key", apiKey);
+    //       xhttp.send();
+    //     } else {
+    //       return;
+    //     }
+    //     return todo;
+    //   })
+    // });
     var xhttp = new XMLHttpRequest();
 
     // Request to API to delete the item

@@ -5,6 +5,11 @@ var api = "https://api.kraigh.net/todos";
 
 class TodoItem extends Component {
 
+  constructor(props){
+    super(props);
+    this.state = {};
+  }
+
   render() {
     var isCompleted;
     if(this.props.completed === true) {

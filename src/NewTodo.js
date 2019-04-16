@@ -5,6 +5,12 @@ var apiKey = "8c86ed60197c61b5ca7df09c803f1dc8852261122d7c95c1ec939232f2066244"
 var api = "https://api.kraigh.net/todos";
 
 export class NewTodo extends Component {
+  
+  constructor(props){
+    super(props);
+    this.state = {};
+  }
+
   render() {
     return (
       <div className="row" id={this.props.div_id}>
