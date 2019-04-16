@@ -73,3 +73,7 @@ input {
 input:focus {
     background-color: lightblue;
 }
+
+#todo-sort-by {
+    margin-bottom: 10px;
+}

@@ -1,69 +1,17 @@
 import React, { Component } from 'react';
 import './Todo.css';
+import TodoItem from './TodoItem';
+
+var apiKey = "8c86ed60197c61b5ca7df09c803f1dc8852261122d7c95c1ec939232f2066244"
+var api = "https://api.kraigh.net/todos";
 
 class Todo extends Component {
+
   render() {
     return (
-      <div>
-        <div className="todo" id="todo-div">
-          <div className="todo-list" id="todo-list">
-            <div>
-              <p className="incomplete">Web Dev Assignment 9</p>
-              <button>Delete</button>
-              <button>Completed</button>
-              <hr></hr>
-            </div>
-            <div>
-              <p className="complete">Web Dev Assignment 8</p>
-              <button>Delete</button>
-              <button>Completed</button>
-              <hr></hr>
-            </div>
-            <div>
-              <p className="complete">Web Dev Assignment 7</p>
-              <button>Delete</button>
-              <button>Completed</button>
-              <hr></hr>
-            </div>
-            <div>
-              <p className="complete">Web Dev Assignment 6</p>
-              <button>Delete</button>
-              <button>Completed</button>
-              <hr></hr>
-            </div>
-            <div>
-              <p className="complete">Web Dev Assignment 5</p>
-              <button>Delete</button>
-              <button>Completed</button>
-              <hr></hr>
-            </div>
-            <div>
-              <p className="complete">Web Dev Assignment 4</p>
-              <button>Delete</button>
-              <button>Completed</button>
-              <hr></hr>
-            </div>
-            <div>
-              <p className="complete">Web Dev Assignment 3</p>
-              <button>Delete</button>
-              <button>Completed</button>
-              <hr></hr>
-            </div>
-            <div>
-              <p className="complete">Web Dev Assignment 2</p>
-              <button>Delete</button>
-              <button>Completed</button>
-              <hr></hr>
-            </div>
-            <div>
-              <p className="complete">Web Dev Assignment 1</p>
-              <button>Delete</button>
-              <button>Completed</button>
-              <hr></hr>
-            </div>
-          </div>
-        </div>
-      </div>
+      this.props.todos.map((todo) => (
+        <TodoItem key={todo.id} id={todo.text} api_id={todo.id} completed={todo.completed} handleDelete={this.props.handleDelete} handleComplete={this.props.handleComplete}/>
+      ))
     );
   }
 }
